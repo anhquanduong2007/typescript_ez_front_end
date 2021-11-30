@@ -1,0 +1,24 @@
+## javascript is typescript 
+
+## Js vs Ts cái nào tốt hơn?
+
+Tùy vào mỗi cá nhân, tùy vào hoàn cảnh mà sẽ chọn Ts hay Js 
+* Javascript
+- Linh hoạt.
+- Không cần phải định nghĩa kiểu dữ liệu or tìm hiểu kiểu dữ liệu khi sử dụng libs.
+- Code nhanh khi làm 1 mình.
+- Cần phải hiểu rõ về javascript để tránh những lỗi lặt vặt.
+-> Đi nhanh khi một mình và lúc ban đầu, càng về sau càng tốn nhiều efforts.
+* Typescript
+- Gặp khó khăn với type system vì bị lỗi liên quan tới kiểu dữ liệu suốt ngày cho những bạn chưa quen.
+- Nhưng được cái nó nhắc code bao xịn :3 
+- Sau khi team quen dần với typescript thì code sẽ tự tin hơn, đỡ lỗi vặt hơn, đặc biệt là những bạn mới.
+- Code một mình thì hơi chậm lúc ban đầu tí, vì phải tìm hiểu kiểu dữ liệu để khai báo.
+- Code cho cả team thì được lợi rất nhiều tự việc auto complete.
+-> Đi hơi chậm một xíu lúc ban đầu, nhưng lúc sau đi sẽ nhanh và an toàn hơn.
+
+## Dự án đang dùng js, chuyển sang ts được không?
+- Được, nhưng cần làm từng bước.
+- Chuyển sang typescript với việc dùng any.
+- Dần dần sẽ refactor any thành type tương ứng cho đến cover hết thì thôi.
+

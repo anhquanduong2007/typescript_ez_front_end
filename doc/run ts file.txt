@@ -1,0 +1,11 @@
+## install packages
+- yarn global add typescript ts-node ts-lib @types/node 
+- npm i -g typescript ts-node ts-lib @types/node 
++ ts-node: như kiểu nodejs giành cho typescript nó sẽ giúp chúng ta đơn giản hóa bước chạy file hơn. Thay vì phải
+compile từ ts sang js rồi dùng nodejs để chạy thì bây giờ mình dùng trực tiếp ts-node luôn.
+## Command-line
+* tsc -v: check version tsc 
+* tsc + tên file ts cần compile: nó sẽ compile file ts sang js. Ví dụ tsc index.ts 
+* Dùng ts-node để chạy thẳng file ts luôn mà không cần compile sang js để chạy node -> ts-node + tên file ts
+
+
