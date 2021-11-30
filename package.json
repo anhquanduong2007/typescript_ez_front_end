@@ -1,0 +1,30 @@
+{
+  "name": "typescriptezfont-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "jest": "^27.4.0",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.5.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valaqua2007/typescript_ez_front_end.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valaqua2007/typescript_ez_front_end/issues"
+  },
+  "homepage": "https://github.com/valaqua2007/typescript_ez_front_end#readme"
+}

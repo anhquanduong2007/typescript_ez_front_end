@@ -1,0 +1,5 @@
+1. npm init
+2. npm i --save-dev jest typescript ts-jest @types/jest
+3. npx ts-jest config:init
+4. tsc --init: tạo ra file config ts (bước này không nhất thiết phải tạo tại thời điểm init jest tạo ở bất cứ
+thời điểm nào để config cái ts cx được).
