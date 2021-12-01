@@ -1,0 +1,26 @@
+## Static type checking 
+- Typescript giúp mình phát hiện ra lỗi ngay trong lúc code.
+- Giúp tránh lỗi typo (phổ biến bên javascript).
+- Tiết kiệm thời gian debug. 
+
+## Types fof Tooling
+- Ngoài việc thông báo lỗi cho mình lúc code.
+- Typescript còn có thể giúp mình hạn chế lỗi bằng việc hỗ trợ auto completions / suggestions.
+
+## tsc - typescript compiler
+- gõ mỗi lệnh tsc thì sẽ nó sẽ tìm tất cả file ts compiler sang file js.  
+- tsc + tên file js thì sẽ compiler file chỉ định. Ví dụ tsc index.ts nhưng đấy là nếu file ở bên ngoài thư mục mới 
+viết được tsc + tên file ts như kia nêú file ts nằm sâu trong folder nào đó ví dụ ở đây file 04-main.ts nằm trong 
+src/lectures nên phải viết: tsc src/lectures/04-main.ts 
+- tsc tên folder/*.ts thì sẽ compiler các file có trong folder đc chỉ định. Ví dụ tsc src/*.ts 
+* Khi compiler thì file ts nằm ở đâu thì file js nó sẽ được generated nằm ở đó vậy trong trường hợp mình muốn 
+tập hợp những file output của mình tại 1 foler nào đó ở đây ví dụ folder dist chẳng hạn thì mình sẽ vào tsconfig.json 
+ở phần "outDir" sẽ đường dẫn đến cho output đến folder. Ví dụ:  "outDir": "./dist", chỉ hoạt động với lệnh tsc không thôi 
+* Khi compiler thì chúng ta sẽ chỉ chấp nhận generated từ ts sang file js nhưng ta cx muốn js cũng được generated 
+thì chỉ cần cho allowJs là true ở tsconfig.json. Ví dụ "allowJs": true,    
+* Nhiều lúc mình muốn check luôn các file js y như ts thì mình có cái opptions "checkJs": true,  
+
+## Emitting with Errors 
+- Config options: --noEmitOnError 
+- true thì không tạo ra file js nếu compile có lỗi. 
+- false thì vẫn tạo ra file js dù compile có lỗi.
