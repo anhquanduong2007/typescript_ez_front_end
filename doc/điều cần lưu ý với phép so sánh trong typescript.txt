@@ -1,0 +1,72 @@
+## Nhắc lại về ==  và === bên Javascript
+- So sánh khác kiểu dữ liệu với ==, thì sẽ được chuyển về number để so sánh 
+- Với 3 dấu === thì sẽ giữ nguyên giá trị để so sánh. 
+Ví dụ: 
+2 == "2" // true 
+false == 0; // true -> false convert về số là 0 nên so sánh sẽ là true 
+
+2 === "2"; // false
+false === 0; // false
+
+* So sánh bên typescript: bên typescript nó đi theo hướng kiểm tra kiểu dữ liệu cho nên dù cho mình dùng 2 dấu 
+= hay 3 dấu = mà nếu khác kiểu dữ liệu là nó báo lỗi luôn
+Ví dụ:
+2 == "2";
+2 === "2";
+-> ts error: This condition will always return 'false' since the types 'number' and 'string' have no overlap.
+
+## So sánh object 
+- object, array, function là tham chiếu.
+- Khi so sánh 2 tham chiếu, thì địa chỉ của tham chiếu được so sánh, chứ không phải giá trị thật sự.
+Ví dụ: 
+const studentA = {id: 1, name: "Alice"};
+const studentB = studentA;
+studentA === studentB; // true;
+studentA === {id: 1, name: "Alice"}; // false
+
+// usually, we just compare the id of two object 
+const studentA = {id: 1, name: "Alice"};
+const studentB = {id: 1, name: "Alice"};
+studentA.id === studentB.id; // true 
+
+Ví dụ hay: 
+let student; // undefined         | let student = {};
+                                  |
+// fetch data                     | // fetch data                           
+student = {                       | student = {
+    id: 1,                        |     id: 1,
+    name: "Alice",                |     name: "Alice",
+};                                | };
+                                  |
+// check truthy                   | if(student?.id){};
+if(student){};                    |
+
+## null & undefined
+- Something hasn't been initialized: undefined.
+- Something is currently unavailible: null 
+- null is equal to undefined if using == (2 dấu bằng)
+* null với undefined dùng 2 dấu bằng thì nó là true còn với 3 dấu thì không, null với undefined là cặp đôi 
+hoàn hoản khi dùng 2 dấu = còn nếu so sánh null với các khác nó luôn trả ra false trừ trường hợp null == null 
+thì nó vẫn true đó là điều hiển nhiên
+Ví dụ:
+null == undefined; // true 
+null == 0; // false
+null >= 0; // true -> null chuyển về số nó ra bằng 0 nhưng mà riêng với trường hợp này nó lại ra true và 
+cái ở trên thì như đã nói so sánh 2 dấu = với bất kì cái gì nó luôn ra false
+
+if(something == null){} // either null of undefined
+if(something){} // any truthy value 
+if(!something){} // any falsy value 
+
+// Check if a global variable existed 
+if(typeof window !== "undefined"){
+    // if window object is available or not 
+    // do something on client side
+}
+* Lưu ý khi làm việc với stringify
+JSON.stringify({
+    id: null, 
+    name: undefined,
+})
+// will return "{\"id\":null}"
+// undefined is remove from the JSON
