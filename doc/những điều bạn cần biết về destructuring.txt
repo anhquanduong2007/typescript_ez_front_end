@@ -1,0 +1,101 @@
+## Object destructuring: hiểu nôm na là chúng ta đang có 1 cái object, mình sẽ rút trích những cái dữ 
+liệu của nó ra thành các biến. 
+interface Student {
+    id: number;
+    name: string;
+    age: number;
+    gender: string;
+}
+const bob: Student = {
+    id: 1, 
+    name: 'Bob',
+    age: 18, 
+    gender: 'male'
+};
+// OLD WAY 
+const id = bob.id;
+const name = bob.name;
+// NEW WAY 
+const {id,name} = bob;
+** trong trường hợp muốn đặt tên khác thì const {id: idBob,name} = bob;
+
+- REST OPERATOR: gom tất cả vào thành 1.
+// OLD WAY
+const id = bob.id; 
+const rest = {
+    name: bob.name,
+    age: bob.age,
+    gender: bob.gender
+}
+// NEW WAY
+const {id,...rest} = bob;
+
+- Clone Object with spread operator (ngược lại với rest từ 1 object nó sẽ rải ra 1 danh sách các item)
+const bob1 = {
+    id: 1, 
+    name: 'Bob 1',
+    age: 18,
+    gender: 'male'
+}
+const bob2 = {
+    ...bob1,
+    name: 'Bob 2'
+}
+
+## Array destructuring
+const fullName = 'Hello World';
+const wordList = fullName.split(' '); // ['Hello','World'];
+
+// OLD WAY
+const firstName = wordList[0];
+const lastName = wordList[1];
+
+// NEW WAY
+const [firstName, lastName] = wordList;
+
+- Array with rest operator
+const [x,y, ... remaining] = [1,2,3,4];
+console.log(x,y,remaining);
+// 1,2, [3,4]
+
+- Clone array with spread operator
+const numberList = [1,2,3,4];
+const newList1 = [...numberList]; // [1,2,3,4]
+const newList2 = [..numberList,5,6]; // [1,2,3,4,5,6]
+
+- Clone array of objects (BE CAREFUL!!!)
+interface Student {
+    id: number;
+    name: string;
+    age: number;
+    gender: string;
+}
+const studentList: Student[] = [
+    {id: 1, name: "Alice", age: 11, gender: "female"},
+    {id: 2, name: "Bob", age: 12, gender: "male"}
+];
+const newList = [...studentList];
+-> lưu ý nó chỉ clone cái mảng thôi chứ nó không clone 2 cái object trong cái mảng kia do đó 
+trong cái newList nó chứ 2 phần tử, trong cái studentList nó cũng chứa 2 phần tử và những phần tử này đang 
+cùng tham chiếu cho nên nếu chúng ta vô tình làm thế này thì nó sẽ thay đổi luôn phần tử ở trong mảng cũ: 
+
+newList[0].name = "Alice Alice";
+console.log(studentList[0].name); // Alice Alice
+
+- Ứng dùng khác  
+// swap two items 
+let x = 5;
+let y = 10; 
+
+// OLD WAY
+let temp = x; 
+x = y;
+y = temp;
+
+// NEW WAY
+[y,x] = [x,y]
+
+==> Rest vs Spread operator
+- Đều là dấu 3 chấm (...)
+- Rest: gom lại thành 1
+- Spread: từ một tách ra thành 1 danh sách
