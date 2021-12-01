@@ -1,0 +1,43 @@
+## What is truthy/falsy
+- falsy value là các giá trị liệt kê sau đây: 
++ false 
++ 0
++ -0
++ On
++ "", '', ``
++ null
++ undefined
++ NaN 
++ document.all: đây là 1 object đặc biệt duy nhất mang giá trị là falsy còn lại tất cả các giá trị khác
+kể cả object rỗng, mảng rỗng nó đều là truthy.
+- Ngược lại, tất cả truthy (kể cả object rỗng, mảng rỗng).
+Ví dụ này 
+1. '0' đây là chuỗi có chứa số 0 nên nó là T 
+2. 'null' chuỗi mà có chữ null nó là T vì chuỗi nó có rỗng đâu với lại đây là kiểu chuỗi chứ có phải kiểu 
+dữ liệu null đâu 
+3. {}, [] cái này đều là T chỉ có 1 object F là document.all 
+4. Number.NaN nó là F 
+5. số 0 là F 
+6. "" chuỗi rỗng là F 
+
+2. Use cases
+// check if falsy (use ! operator)
+if(!studentId){}
+// check if truthy
+if(student){}
+
+const name = "Hello";
+console.log(!name); // false
+console.log(!!name); // true
+-> bình thường 1 dấu là phủ định, 2 dấu sẽ hiểu đơn giản là nó chuyển về kiểu boolean thôi 
+như ví dụ trên biến name có giá trị nên nó đang là 1 truthy nên khi console.log(!!name) thì nó in ra true 
+thôi.
+
+const name = '';
+console.log(!name); // true 
+console.log(!!name); // false
+
+// !! operator or Boolean()
+const student = {id: 1, name: "Alice"};
+const hasStudent1 = !!student?id; // true 
+const hasStudent2 = Boolean(student?.id); // true
