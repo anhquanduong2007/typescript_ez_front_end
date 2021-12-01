@@ -1,0 +1,82 @@
+## strict flag là gì? 
+- Bật strict = true sẽ bất tất cả options liên quan tới strict lên true. 
+- Mặc định các options liên quan tới strict là false, nhưng recommend sử dụng true. 
+- Config của từng option sẽ ưu tiên cao hơn so với "strict". Tức strict = true, mà noImplicitAny = false
+thì giá trị cuối cùng vẫn là noImplicitAny = false.
+
+## Option: noImplicitAny
+- Khi typescript không thể xác định được kiểu dữ liệu của một biến nào đó, thì biến đó sẽ mang kiểu dữ liệu any.
+- Khi bật lên true, nó sẽ báo lỗi nếu trường hợp này xả ra, ngược lại bỏ qua lỗi này. 
+Ví dụ 
+function isEmpty(numberList){
+    // Cái numberList này chúng ta không khai báo kiểu dữ liệu cho nó vậy làm sao chúng ta biết ông thần này có kiểu 
+    dữ liệu là gì cho nên khi chúng ta mở "noImplicitAny": true, ts nó sẽ báo lỗi như ở dưới.
+
+    return numberList.length === 0;
+}
+console.log(isEmpty(123));
+// js: false
+// ts: error Parameter 'numberList' implicitly has an "any" type.
+
+==> Cách fix 
+
+- Cách 1 là tắt cái "noImplicitAny" từ true thành false thôi
+- Cách 2 là thêm kiểu dữ liệu cho numberList
+
+function isEmpty(numberList: number[]){
+    return numberList.length === 0;
+}
+console.log(isEmpty(123)); // wrong data type
+// js: false
+// ts: Argument of type "number" is not assignable to parameter of type 'number[]'
+console.log(isEmpty([])); // it works and return true 
+
+## Option: strictNullChecks
+- Khi bật lên true thì sẽ báo lỗi khi null/undefined được sử dụng không đúng. Ví dụ gọi những hàng number, string, array,...
+chẳng hạn 
+- Khi config false thì sẽ bỏ qua, nhưng có rủi ro xảy ra lỗi lúc runtime.
+Ví dụ 
+let str;
+if(Math.random() > 0.5){
+    str = '';
+}
+str.toString();
+// js: runtime error "Cannot read property 'toString' of undefined"
+// ts: type error "Object is possibly 'undefined'"
+
+Ví dụ khác: 
+interface Student {
+    id: number;
+    name: string;
+    gender: "male" | "female";
+    age: number;
+};
+function findStudentById(studentList: Student[], studentId: number): Student | undefined {
+    if(studentList.length === 0) return undefined;
+    return studentList.find((x) => x.id === studentId);
+}
+const studentList: Student[] = [
+    {id: 1, name: "Alice", gender: "female", age: 20},
+    {id: 2, name: "Bob", gender: "male", age: 20},
+]
+const bob = findStudentById(studentList,3);
+
+console.log(bob.name); // error here 
+// js: runtime error "Cannot read property 'name' of undefined"
+// ts: type error "Object is possibly 'undefined'"
+
+// Fix: do check before using 
+if(bob){
+    console.log(bob.name);
+}
+
+## Option: alwaysStrict
+- Khi bật lên true thì typescript sẽ luôn parse files ở chế độ strict mode và sẽ có "use strict" ở đầu file javascript 
+được tạo ra. 
+
+## Other options 
+1. strictBindCallApply: đảm bảo bind, call, và apply được gọi đúng args 
+2. strictFunctionTypes: đảm bảo đúng dữ liệu cho parameters của function ( không áp dụng cho method) 
+3. strictPropertyInitialization: đảm bảo thuộc tính của class phải được khởi tạo trong hàm tạo 
+4. noImplicitThis: đảm bảo là this không mang kiểu dữ liệu any
+5. useUnknownInCatchVariables: đảm bảo là biến trong catch là kiểu unknown 
