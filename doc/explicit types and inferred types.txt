@@ -1,0 +1,31 @@
+## Explicit types 
+- Khai báo kiểu dữ liệu trong typescript thì sử dụng dấu 2 chấm đằng sau tên biến.
+Ví dụ 
++, let count: number = 123;
++, let studentName: string = "Alice";
++, let isActive: boolean = true;
++, let numberList: number[] = [1,2,3];
+-> Với 1 cái biến chúng ta khai báo rõ ràng nó là kiểu dữ liệu gì thì đó là explicit types
+
+## Inferred types 
+- Typescript thông minh detect được kiểu dữ liệu tương ứng ngay cả khi mình không khai báo cụ thể kiểu dữ liệu 
+Ví dụ 
++, khi khai báo thế này let count = 123 typescript sẽ tự hiểu được là cái biến count này chắc chắn là kiểu number
+-> Tuy nhiên không phải lúc nào nó cũng biết được kiểu dữ liệu là gì, có một số trường hợp nó sẽ không detect được 
+thì lúc đó cái biến của mình sẽ có kiểu dữ liệu là any.
+
+## Eraised types 
+- Sau khi compile từ typescript sang javascript, tất cả type annotation sẽ bị xóa. Nghĩa là mình khai báo kiểu 
+dữ liệu ở ts thì sang js sẽ bị mất hết, xem ví dụ ở src/lectures/eraised_types.ts và src/lectures/eraised_types.js 
+
+## Downleveling 
+- Tùy vào target mà code sau khi được compile ra javascript sẽ khác nhau để đảm bảo target environment có thể 
+hiểu và thực thi được code mình viết bên typescript.
+- Như chúng ta biết typescript của mình mình viết xong sau đó là nó phải compile ra cho mình để chạy ở trên 1 
+trình duyệt nào đấy hoặc chạy trên một môi trường nào đó thì ở file tsconfig.json chúng ta thấy cái target,như 
+vậy nếu như môi trường của mình là nó có hộ trợ được tới es5 rồi hay hỗ trợ tới es6 rồi hay tới es7 rồi thì tùy 
+vào mỗi môi trường chúng ta có thể chỉ định ở cái target này để khi mà nó compile từ ts sang js,nó sẽ biết là 
+ok nó sẽ cẩn generated ra cái code như thế nào. 
+- Ví dụ như ở đây mình để targer là es5 thì nó chưa hỗ trợ const với template string nên khi compile ra thì const 
+sẽ chuyển hết sang var và cái template string chuyển thành dấu "" + với chuỗi nào đó nhưng nếu chuyển sang 
+một targer es6 gì gì đó thì nó sẽ giữ nguyên const với `` hiểu như vậy là được.
