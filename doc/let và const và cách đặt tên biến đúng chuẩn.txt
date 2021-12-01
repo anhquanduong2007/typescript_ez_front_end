@@ -1,0 +1,36 @@
+## When to use const 
+- Dùng cho hằng số. UPPER_CASE 
+- Dùng cho biến mà không có nhu cầu thay đổi giá trị. camelCase 
+Ví dụ: 
+// constants 
+const API_URL = "https://api/com";
+// với biến mà không có nhu cầu đổi giá trị 
+const channelName = "Hello";
+
+const student = {};
+student.name = "Bob";
+
+const numberList = [];
+numberList.push(1);
+
+-> Luôn ưu tiên dùng const, đổi sang let khi cần thiết.
+
+## When to use let 
+- Dùng cho những biến có nhu cầu thay đổi bằng việc thực hiện phép gán (re-assignment)
+Ví dụ: 
+let count = 1;
+count++ 
+
+for(let i = 0;i<10;i++){
+    console.log(i);
+}
+
+let numberList = [1,2,3];
+numberList = [];
+
+## Naming convention 
+1. Tên biến hằng số - UPPER_CASE - Eg: API_URL, IMAGE_URL,...
+2. Tên biến boolean - camelCase - Eg: hasName, isActive, show,...
+3. Tên biến số ít - camelCase - Eg: student, product, count,...
+4. Tên biến số nhiều - camelCase - Eg: studentList, productList,...
+5. Tên hàm - camelCase - Eg: addProduct, convertObjectToArray,...
