@@ -1,0 +1,189 @@
+## Default function return type
+- Base on return keyword, typescript can inference the return type. (nó sẽ tự suy luận kiểu dựa vào từ khóa return 
+nếu không có return nó sẽ là void)
+Ví dụ: 
+function sayHello() {
+    console.log('Hi Easy Frontend');
+}
+// ts: function sayHello(): void
+
+function sum(a: number, b: number) {
+    return a + b;
+}
+// ts: function sum(a: number, b: number): number
+
+## Explicit return type
+- Chỉ định cụ thể hàm đó return về kiểu dữ liệu gì và khi chỉ định cụ thể kiểu dữ liệu nào đó mà return về kiểu dữ
+liệu khác thì nó sẽ lỗi
+Ví dụ: 
+function sum(a: number, b: number): number {
+    return a + b;
+}
+// ts: function sum(a: number, b: number): number
+
+function sum(a: number, b: number): number {
+    return a + b.toString();
+}
+// ts error: Type 'string' is not assignable to type 'number'
+
+## Optional and default parameter
+- Add question mark ? to tell typescript this is an optional parameter.
+- Parameter cannot have question mark and initializer.
+Ví dụ: 
+
+// optional parameter
+// this is how ts understand
+// function getLength(numberList?: number[] | undefined): number
+function getLength(numberList?: number[]) {
+    return Array.isArray(numberList) ? numberList.length : 0;
+}
+// default parameter
+// this is how ts understand
+// function getLength(numberList?: number[]): number
+function getLength(numberList: number[] = []) {
+    return Array.isArray(numberList) ? numberList.length : 0;
+}
+
+-> Không thể vừa dùng optional và parameter là ý thứ 2 ở trên 
+// ts error: Parameter cannot have question mark and initializer
+function getLength(numberList?: number[] = []) {
+    return Array.isArray(numberList) ? numberList.length : 0;
+}
+
+## Function Overload cho phép bạn thiết lập mối quan hệ giữa các kiểu tham số và kiểu kết quả trả về của một hàm.
+Ví dụ: 
+
+function addNumbers(a: number, b: number): number {
+    return a + b;
+}
+
+function addStrings(a: string, b: string): string {
+    return a + b;
+}
+
+Trong ví dụ này:
++ Hàm addNumbers() trả về tổng của hai số.
++ Hàm addStrings() trả về chuỗi được nối từ hai chuỗi
+
+Có thể sử dụng kiểu kết hợp để định nghĩa một loạt các kiểu cho các tham số và kết quả của hàm như sau:
+
+function add(a: number | string, b: number | string): number | string {
+    if (typeof a === 'number' && typeof b === 'number')
+        return a + b;
+
+    if (typeof a === 'string' && typeof b === 'string')
+        return a + b;
+}
+Tuy nhiên, kiểu liên hợp không thể hiện chính xác mối quan hệ giữa các kiểu tham số và kết quả
+Hàm add() cho trình biên dịch biết rằng nó sẽ chấp nhận tham số kiểu số hoặc chuỗi và trả về kiểu số hoặc chuỗi. 
+Nó không thể mô tả rằng hàm trả về một số khi các tham số là số và trả về một chuỗi nếu các tham số là chuỗi.
+Để mô tả tốt hơn các mối quan hệ giữa các kiểu được sử dụng bởi một hàm, TypeScript hỗ trợ nạp chồng hàm. Ví dụ
+
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: any, b: any): any {
+   return a + b;
+}
+
+Trong ví dụ này, chúng ta đã thêm hai nạp chồng hàm vào hàm add(). Nạp chồng hàm đầu tiên cho trình biên dịch 
+biết rằng khi các đối số là số, hàm add() sẽ trả về một số. Nạp chồng hàm thứ hai thực hiện tương tự nhưng đối với
+một chuỗi.Mỗi nạp chồng hàm xác định một tổ hợp các kiểu được hỗ trợ bởi hàm add(). Nó mô tả ánh xạ giữa các
+tham số và kết quả mà chúng trả về. Bây giờ, khi bạn gọi hàm add(), trình soạn thảo mã gợi ý rằng có sẵn một 
+hàm quá tải, hover vào biến result để xem trong file 03-03.ts
+
+** Lưu ý: Khi bạn nạp chồng hàm, số lượng tham số bắt buộc phải giống nhau. Nếu nạp chồng hàm có nhiều tham số hơn
+tham số khác, bạn phải làm cho các tham số bổ sung là tùy chọn. Ví dụ:
+
+function sum(a: number, b: number): number;
+function sum(a: number, b: number, c: number): number;
+function sum(a: number, b: number, c?: number): number {
+    if (c) {
+        return a + b + c;
+    }
+    return a + b;
+}
+
+Hàm sum() chấp nhận hai hoặc ba tham số. Tham số thứ ba là tùy chọn. 
+Nếu bạn không làm cho nó tùy chọn, bạn sẽ gặp lỗi.
+
+## Other type: void and never
+Ví dụ void: 
+
+// function noop(): void
+function noop() {
+    return;
+}
+// function noop(): void
+function noop() {
+
+}
+- TypeScript có một kiểu dữ liệu mới là never có nghĩa giá trị đó sẽ không xảy ra. Never được sử dụng khi ta 
+chắc chắn việc gì đó không xảy ra
+Ví dụ: 
+type NewType = number & string; // never
+
+function fail(msg: string): never {
+    throw new Error(msg);
+}
+-> Cái function này khi chúng ta vào thì nó luôn luôn throw ra 1 message thì rõ ràng nó luôn sẽ bắn ra 1 cái lỗi 
+không có chuyện là nó sẽ không bắn ra gì cả 
+
+## Destructuring parameter
+Ví du: 
+function createStudent(id: number, name: string, age: number) {
+    console.log(id, name, age)
+}
+createStudent(1, 'Bob', 18);
+-> Thi thoảng chúng ta code ý, khi mà những cái hàm bắt đâu có nhiều tham số ý thì lúc đó chúng ta nên nghĩ cách
+cải tiến lại nếu không khi mà mình sử dụng cái hàm ví dụ mình gọi 1 cái hàm bất kỳ, mình chuyên vô tham số đầu tiên 
+, tham số thứ 2, tham số thứ 3 nhưng mình kb tham số đầu tiên nó là cái gì, tham số t2 là gì :3 đây ví dụ mình nhìn
+cái hàm createStudent ở trên đầu này mình nhìn số 1, "Bob", 18 thì có biết số 1 là gì không, Bob là gì không, 18 là không
+trong trường hợp này còn dễ, trong trg hợp dùng 4 hay 5 cái tham số mình gọi cái hàm này xong không biết là từng cái 
+giá trị đó mang ý nghĩa là gì lun vậy nên chúng ta có thêm làm 1 số cách sau đây 
+
+** Cách 1: gom nó lại thành 1 tham số và tham số này là kiểu object 
+function createStudent(student: { id: number, name: string, age: number})
+{
+    const { id, name, age } = student;
+    console.log(id, name, age)
+}
+createStudent({
+    id: 1,
+    name: 'Bob',
+    age: 18,
+});
+
+** Cách 2: Thay vì mình destructuring trong hàm thì mình destructuring ngay trực tiếp phần khai báo hàm
+function createStudent({ id, name, age }: { id: number, name: string, age: number}) {
+    console.log(id, name, age)
+}
+createStudent({
+    id: 1,
+    name: 'Bob',
+    age: 18,
+});
+** Cách 3: tốt nhất luôn là mình sẽ định nghĩa ra luôn kiểu dữ liệu của cái tham số của mình thay vì mình phải
+định nghĩa 1 object inline như ở trong cách 2
+interface Student {
+    id: number;
+    name: string;
+    age: number;
+}
+function createStudent({ id, name, age }: Student) {
+    console.log(id, name, age)
+}
+createStudent({
+    id: 1,
+    name: 'Bob',
+    age: 18,
+} as Student);
+
+## Bảng type compatible
+# - Type - Desc 
+1 - string, number, boolean - 3 kiểu primitive phổ biến 
+2 - null - unavailible
+3 - undefined - not initialized
+4 - any - ignore type checking 
+5 - unknown - not legal to do any thing 
+6 - void - function has no return
+7 - never - never return a value
