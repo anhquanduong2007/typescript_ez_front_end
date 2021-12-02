@@ -44,6 +44,7 @@ const studentB: Student = {
 ## Union type 
 - Kết hợp 2 hoặc nhiều kiểu dữ liệu lại với nhau để tạo ra một kiểu dữ liệu mới 
 - Cho phép giá trị có thể chấp nhận hoặc là kiểu dữ liệu này, hoặc là kiểu dữ liệu kia. 
+- Một lưu ý nhỏ là union type thì mình dùng cho cái type;
 Ví dụ: 
 type Status = 'active' | 'inactive';
 type ProductStatus = 0 | 1 | 2 | 3;
@@ -147,5 +148,30 @@ function Product_2({ data }: ProductProps) {}
 ## Nên dùng interface hay type 
 - Mặc định cứ dùng interface nếu đến cái case nào đó không dùng được thì dùng type 
 - ...
+
+## So sánh interface và type
+- Interface có thể merge còn Type thì không
+- Type có thể sử dụng được với "Computed Properties" còn interface thì không (là MappedTypes)
++ Với type: 
+
+type keys = 'color' | 'name'; 
+
+type Shape = {
+  [key in keys]:string;
+}
+const Circle:Shape = {
+  name:'circle',
+  color:'res'
+}
+
+Với interface: 
+type keys = 'color' | 'name';
+interface Shape {
+  [key in keys]:string;
+}
+const Circle:Shape = {
+  name:'circle',
+  color:'res'
+}
 
 

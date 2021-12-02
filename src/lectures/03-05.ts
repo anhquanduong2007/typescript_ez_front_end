@@ -27,12 +27,20 @@ interface Student {
 const studentList: List<Student> = [{ id: 1, name: 'bob' }];
 
 // Keyof operator
-interface Student {
+interface Student_2 {
   id: number;
   name: string;
 }
 
-type StudentKey = keyof Student;
+type StudentKey = keyof Student_2;
 // -> nó sẽ bằng với type StudentKey = "id" | "name"
 const keys: StudentKey = 'id';
 console.log(keys);
+
+type MappedTypes = {
+  [key in keyof Student_2]: boolean;
+};
+const newStudent: MappedTypes = {
+  id: true,
+  name: false,
+};
