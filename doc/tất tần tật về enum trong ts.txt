@@ -1,0 +1,85 @@
+## Enum 
+- What: Tập hợp các giá trị cùng nhóm.
+- Why: Dễ dàng quản lý và truy xuất
+- When: Sử dụng cho data 1 chiều, định nghĩa enum --> rồi sử dụng. 
+* Number enum 
+** Chú ý đặt tên enum theo kiểu PascalCase
+-> Để default nó sẽ đánh số từ 0 -> n - 1
+enum Status {
+    PENDING, // 0
+    IN_PROGRESS, // 1
+    DONE, // 2
+    CANCELLED, // 3
+}
+-> Muốn cho nó chạy từ 1 giá trị nào đó thì gán giá trị cho nó 
+enum Status {
+    PENDING = 3, // 3
+    IN_PROGRESS, // 4
+    DONE, // 5
+    CANCELLED, // 6
+}
+-> Hoặc muốn gán giá trị cho từng phần tử enum
+enum Status {
+    PENDING = 3,
+    IN_PROGRESS = 5,
+    DONE = 8,
+    CANCELLED = 10,
+}
+
+** Khi bạn định nghĩa 1 cái enum nó là 1 number enum cho nên khi chúng ta tạo ra 1 biến có kiểu dữ liệu là enum
+này 
+
+enum Status {
+    PENDING, // 0
+    IN_PROGRESS, // 1
+    DONE, // 2
+    CANCELLED, // 3
+}
+
+// can assign any number to your enum variable
+const stats1: Status = Status.PENDING;
+const stats2: Status = 1;
+const stats3: Status = -1;
+-> chúng ta có thể gán cho nó bất cứ 1 giá trị số nào chứ không nhất thiết là phải là giá trị có trong enum này 
+mà nó không báo lỗi. 
+
+// number enum --> support reverse mapping
+console.log(Status[0]); // 'PENDING'
+console.log(Status['DONE']); // 2
+
+* String enum
+- Don't have reverse mapping for string enum.
+enum MediaTypes {
+    JSON = "application/json",
+    XML = "application/xml",
+}
+fetch("https://example.com/api/endpoint", {
+    headers: {
+    Accept: MediaTypes.JSON,
+},
+}).then(response => {
+    // ...
+});
+
+## Khi nào sử dụng enum 
+- Cần sử dụng dữ liệu mà chúng ta chỉ định nghĩa ra và sử dụng 1 chiều thôi.
+- Tuy nhiên trong trường hợp nào đó, đặc biệt là trường hợp cái dữ liệu chúng ta có nhận được từ server trả về và 
+chúng ta cần phải chuyển dữ liệu từ server ví dụ server trả về chắc chắn không có trả về kiểu MediaTypes.JSON chắc
+chắn là không có rồi, nó sẽ chả về cái chuỗi là "application/json", và nhiệm vụ của mình á là phải chuyển cái chuỗi 
+thành enum của mình, nếu như mình dùng enum đúng không thì trong trường hợp đấy không có được, vì vậy trong trường
+hợp này chúng ta sẽ sử dụng cái kiểu là union type Ví dụ type MediaTypes = "application/json" | "application/xml"
+khi mì chúng ta định nghĩa cái dạng này thì server trả về thì nó vẫn map ra được nó ra đâu được đúng cái chuỗi kia 
+thì ok nhưng mà chúng ta định nghĩa ra 1 cái enum như thế kia thì chúng ta không có chuyển được về kiểu dạng là enum 
+cho nên là không nên dùng enum trong trường hợp định nghĩa cái data trả về từ phía server.
+
+======> Chú ý 
+Điểm khác biệt trong việc khởi tạo tên phần tử của enum so với object literal, đó là enum không cho phép sử dụng 
+các phép logic để khởi tạo 
+tên phần tử.
+Ví dụ nếu làm thế này là sai: 
+let postFix = 'uary';
+enum Month {
+    'Jan' + postFix, // không hợp lệ
+    'Febr' + postFix, // không hợp lệ
+}
+-> Điều này cũng dễ hiểu thôi, việc đặt tên bằng các phép logic sẽ làm hỏng đi tính chặt chẽ trong TypeScript.
