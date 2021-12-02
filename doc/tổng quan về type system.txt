@@ -1,0 +1,89 @@
+## Các kiểu dữ liệu thường gặp 
+- Các kiểu dữ liệu bạn đã biết bên javascript
++ Primitive: number, boolean, string, null, undefined, symbol,...
++ Reference: array, object, function
+- Còn typescript, bạn sẽ bắt gặp: any, unknown, void, never,...
+Ví dụ: 
+let count = 5;
+count = "five";
+// type error: Type 'string' is not assignable to type 'number'
+
+// adding any, solved :3 
+let count: any = 5;
+count = "five"; // no error now :v 
+
+// three common primitive types: string, number, boolean
+let count: number = 10;
+let channelName: string = "Hello world";
+let isActive: boolean = true;
+-> với những kiểu dữ liệu hoàn toàn đơn giản như này thì chúng ta có thể bỏ đi cái phần khai báo kiểu dữ liệu bởi
+vì typescript nó đủ thông minh để nó biết được kiểu dữ liệu là gì. 
+// we can simply omit the type annotation
+let count = 20;
+let channelName = "Hello world";
+let isActive = true;
+
+## literal types 
+- Chỉ định 1 giá trị cụ thể làm kiểu dữ liệu.
+Ví dụ: 
+let count: 1;
+let channelName: 'easy';
+let isActive: false;
+let student: null;
+-> 1 giá trị củ thể nào đó, nó lấy làm kiểu dữ liệu luôn thì nó gọi là literal types và khi khai báo như vậy nó 
+chỉ nhận đúng duy nhất cái giá trị đó mà thôi nếu gán giá trị khác nó lỗi ngay
+let count: 1 = 2;
+// error Type '2' is not assignable to type '1';
+
+- Với const, khi omit type annotation, literal type sẽ được sử dụng. Vì const chỉ nhận được 1 giá trị, không thể
+thay đổi được.
+Ví dụ: 
+const count = 1; // const count: 1;
+const channelName = "Hello world"; // const channelName: "Hello world";
+const isActive = false; // const isActive: false
+-> nếu dùng const như này khi hover lên chúng ta sẽ thấy là nó sẽ ra cái kiểu dữ liệu là giá trị nó được gán = . Ví 
+dụ ở đây const count = 1 thì kiểu dữ liệu của nó là 1 và với let, var thì nó sẽ suy diễn ra kiểu bth 
+let count = 1; // let count: number
+let channelName = "Hello world"; // let channelName: string
+let isActive = false; // let isActive: boolean
+
+const student = {
+    id: 1, 
+    name: "Hello world",
+}
+-> this is how ts understand: 
+const student: {
+    id: number;
+    name: string;
+}
+because the props of an object can be updated
+student.name = "typescript is easy"; // works
+-> trong trường hợp chúng ta không muốn sửa, không muốn thay đổi cái object này thì chúng ta có thể dùng cái as const 
+const student = {
+    id: 1, 
+    name: "Hello world",
+} as const
+-> this is how ts understand:
+const student: {
+    readonly id: 1;
+    readonly name: "Hello world";
+}
+you now can't update props of this object
+student.name = "typescript is easy";
+// error: Cannot assign to 'name' because it is a read-only property
+
+- Với array thì cũng tương tự object thôi, array cũng có behavior tương tự. 
+const numberList = [1,2,3];
+// ts understand: const numberList: number[]
+const numberListAsConst = [1,2,3] as const 
+// ts understand: const numberListAsConst: readonly [1,2,3]
+
+## Type Assertion
+- Bình thường là ts nó hiểu, nó tự suy diễn kiểu dữ liệu thì chúng ta có thể dùng toán tử as để chúng ta ép nó 
+run qua 1 kiểu khác, tức là giúp cho th typescript nó hiểu 1 cách khác bởi vì code của chúng ta, chúng ta là ng 
+hiểu rõ nhất cho nên là thỉnh thoảng th typescript nó suy luận không đúng hoặc là nó không hiểu được thì chúng 
+ta có thể giúp nó suy diễn tốt hơn 
+- Cái này trong quá trình viết code, nó không có ảnh hưởng tới cái lúc mình runcode 
+
+## Type casting nó mang ý nghĩa là nó sẽ ép kiểu ở lúc runtime còn type assertion nó chỉ can thiệp vào cái chuyện
+th ts, cách mà thằn ts nó hiểu cái code của mình, mình chỉ giúp th ts hiểu code mình tốt hơn.
