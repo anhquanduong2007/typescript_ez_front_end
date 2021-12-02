@@ -1,0 +1,10 @@
+## Utility Types
+# - name - Desc
+1 - Partial - Set all props of Type to optional
+2 - Required - Set all props of Type to required
+3 - Readonly - Set all props of Type to readonly
+4 - Record<Key, Type> A type with key from Keys and has value of Type 
+5 - Pick<Type, Key> A type buy picking a set of Keys from Type
+6 - Omit<Type, Keys> A type by omitting a set of Keys from Type
+7 - ReturnType - The return type of function Type
+-> xem docs: https://www.typescriptlang.org/docs/handbook/utility-types.html
