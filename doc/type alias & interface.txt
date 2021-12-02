@@ -1,0 +1,151 @@
+## Type Alias 
+- Alias là 1 cách đặt tên thôi thì hiểu đơn giản là type alias chính là 1 cái cách để chúng ta đặt tên lại cho
+bất kì kiểu dữ liệu nào khác. 
+## Interface là 1 cách để mình đặt tên cho 1 cái object type 
+
+## Primitive type
++ Trường hợp dưới đây, chỉ đơn giản là mình tạo ra một cái tên gọi khác cho kiểu primitive.
++ Cái này thì ít hữu dụng, vì cơ bản mình có thể dùng trực tiếp primitive type luôn cho khỏe.
++ Interface thì không định nghĩa được nhé
+Ví dụ: 
+type StudentName = string;
+type StudentAge = number;
+type IsTopStudent = boolean;
+
+## Object type
++ Object type là để định nghĩa cho 1 object, 1 array, 1 function đều được hết thì cả type, cả interface đều có thể
+dùng để định nghĩa những thứ này.
+Ví dụ: 
+type Student = {
+    readonly id: number;
+    name: string; 
+    age?: number; // optional
+    -> có thể có hoặc không có cái age này cũng được
+}
+
+interface Student {
+    readonly id: number;
+    name: string; 
+    age?: number; // optional
+}
+   
+const studentA: Student = {
+    id: 1, 
+    name: "Alice",
+}
+-> cái readonly lúc tạo thì set được thôi còn lúc update thì không được nhé
+
+const studentB: Student = {
+    id: 2, 
+    name: "Bob",
+    age: 18
+}
+
+## Union type 
+- Kết hợp 2 hoặc nhiều kiểu dữ liệu lại với nhau để tạo ra một kiểu dữ liệu mới 
+- Cho phép giá trị có thể chấp nhận hoặc là kiểu dữ liệu này, hoặc là kiểu dữ liệu kia. 
+Ví dụ: 
+type Status = 'active' | 'inactive';
+type ProductStatus = 0 | 1 | 2 | 3;
+type StudentId = number | string;
+
+interface Student {
+    id: number | string;
+    name: string;
+    gender: 'male' | 'female';
+    grade: 'A' | 'B' | 'C' | 'D' | 'E';
+}
+
+let x: number | string = 1;
+x = 'super'; // works
+x = 123; // works
+x = false; // ts error: Type 'boolean' is not assignable to type 'string | number'
+
+## Intersection type
+- Trong trường hợp chúng ta muốn gom lại các thuộc tính của các interface hoặc của các type thì có thể sử dụng 
+cái này 
+Ví dụ: 
+interface BusinessPartner {
+    name: string;
+    credit: number;
+}
+
+interface Identity {
+    id: number;
+    name: string;
+}
+
+interface Contact {
+    email: string;
+    phone: string;
+}
+
+type Customer = BusinessPartner & Contact;
+let c: Customer = {
+    name: 'ABC Inc.',
+    credit: 1000000,
+    email: 'sales@abcinc.com',
+    phone: '(408)-897-5735'
+};
+type Employee = Identity & BusinessPartner & Contact;
+let e: Employee = {
+    id: 100,
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phone: '(408)-897-5684',
+    credit: 1000
+};
+-> Lưu ý những cái key trùng nhau ở đây có name này, các key này nó phải giống kiểu dữ liệu nhé nếu khác thì nó 
+sẽ bị lỗi.
+
+// interface way
+interface Employee extends Identity, Contact {}
+interface Customer extends BusinessPartner, Contact {}
+
+## Add new props 
+- Able to add new props to Interface, but not Type Alias
+Ví dụ: 
+interface Student {
+    id: number;
+    name: string;
+}
+// declaration merging
+// works, no error
+interface Student {
+    age?: number;
+}
+const alice: Student = {
+    id: 1,
+    name: 'Alice',
+    age: 10
+}
+
+Còn với type 
+type Student = {
+    id: number;
+    name: string;
+}
+// ts error: Duplicate identifier 'Student'.
+type Student = {
+    age?: number;
+}
+
+## Cách đặt tên type vs interface
+- Use PascalCase instead of camelCase. Use Student instead of student (Viết hoa hết chữa cái đầu tiên của mỗi từ)
+- Don't use prefix I. Use Student instead of IStudent
+Ví dụ: 
+
+interface Product {
+    id: string;
+    title: string;
+}
+interface ProductProps {
+    data: Product;
+}
+function Product_2({ data }: ProductProps) {}
+
+## Nên dùng interface hay type 
+- Mặc định cứ dùng interface nếu đến cái case nào đó không dùng được thì dùng type 
+- ...
+
+
