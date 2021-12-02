@@ -1,0 +1,42 @@
+## Generics 
+- Hiểu nôm na: kiểu dữ liệu mà có nhận than số và trả về kiểu dữ liệu tương ứng.
+-> khi mà nhận vào tham số như vậy nó sẽ giúp mình sẽ tạo được ta kiểu tổng quát, kiểu chung chung
+Ví dụ: 
+interface Student {
+    id: number;
+    name: string;
+}
+
+const numberList: Array<number> = [1, 2, 3];
+const wordList: Array<string> = ['easy', 'frontend'];
+
+const studentList: Array<Student> = [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' },
+]
+
+## keyof operator
+- Lấy ra tất cả những cái key của 1 cái kiểu dữ liệu nào đó và nó sẽ biến thành 1 tập hợp các kiểu union 
+Ví dụ: xem file(03-05.ts)
+
+## typeof operator
+- Lấy được kiểu dữ liệu của 1 giá trị nào đó 
+Ví dụ: 
+console.log(typeof 'Hello word'); // string 
+console.log(typeof 123); // number
+console.log(typeof false); // boolean
+
+## Mapped types 
+- Dùng index signature để định nghĩa kiểu dữ liệu có props lấy từ kiểu dữ liệu khác.
+
+Ví dụ: 
+interface Student {
+    id: number;
+    name: string;
+}
+type MappedTypes = {
+    [Key in keyof Student]: boolean;
+    -> kiểu: 
+    id: boolean;
+    name: boolean;
+};
